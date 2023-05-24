@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel
 from PyQt5.QtCore import Qt, QTimer
+from multiprocessing import Process
 
 class OverlayWindow(QWidget):
     def __init__(self, text, timer=None):
@@ -20,11 +21,13 @@ class OverlayWindow(QWidget):
         if event.key() == Qt.Key_Q:
             QApplication.quit()
 
-def writeToScreen(text, timer):
+def write_to_screen(text, timer):
     app = QApplication(sys.argv)
     window = OverlayWindow(text, timer)
     window.show()
     sys.exit(app.exec_())
     
-if __name__ == '__main__':
-    writeToScreen('test', 5)
+def write_to_screen_process(text, timer):
+    p = Process(target=write_to_screen, args=(text, timer))
+    p.daemon = True
+    p.start()
