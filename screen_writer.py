@@ -12,7 +12,7 @@ class OverlayWindow(QWidget):
         self.height = 100
         screen = QDesktopWidget().screenGeometry()
         self.setGeometry(100, 100, 200, 100)
-        self.move((screen.width()-self.width)/2, (screen.height()-self.height)/2)
+        self.move(int((screen.width()-self.width)/2), int((screen.height()-self.height)/2))
         
         self.label = QLabel(text, self)
         self.label.setStyleSheet("font-size: 20px; color: white;")
