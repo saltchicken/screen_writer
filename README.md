@@ -23,9 +23,12 @@ write_to_screen_process("Hello, world!", 5)
 ```
 
 ```python
-# Use returned queue to update text
-queue = write_to_screen_process("Hello, world!", 60, True)
-queue.put("Goodbye, world!")
+# Return ControlOverlay object to interact with the window
+overlay_controller = write_to_screen_process("Hello, world!", 60, True)
+time.sleep(2)
+overlay_controller.write("Goodbye, world!")
+time.sleep(2)
+overlay_controller.exit()
 ```
 
 ### Dependencies

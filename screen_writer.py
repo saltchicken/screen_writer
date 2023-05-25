@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel
 from PyQt5.QtCore import Qt, QTimer
 from multiprocessing import Process, Queue
 import time
-
+        
 class OverlayWindow(QWidget):
     def __init__(self, text, timer=None, queue=None):
         super().__init__()
@@ -37,11 +37,22 @@ class OverlayWindow(QWidget):
     def event_loop(self):      
         try:
             message = self.queue.get_nowait()
-            print(message)
             self.label.setText(message)
         except:
             time.sleep(0.25)
 
+class OverlayController():
+    def __init__(self, queue):
+        self.queue = queue
+        
+    def write(self, text):
+        # TODO Make this a JSON object with write type
+        self.queue.put(text)
+        
+    def exit(self):
+        # TODO Make this a JSON object with command type
+        self.queue.put('exit')
+        
 def write_to_screen(text, timer, queue=None):
     app = QApplication(sys.argv)
     window = OverlayWindow(text, timer, queue)
@@ -54,7 +65,7 @@ def write_to_screen_process(text, timer, queue=False):
         p = Process(target=write_to_screen, args=(text, timer, queue))
         p.daemon = True
         p.start()
-        return queue
+        return OverlayController(queue)
     else:
         p = Process(target=write_to_screen, args=(text, timer))
         p.daemon = True
