@@ -7,7 +7,7 @@ This Python project uses the PyQt5 library to create a simple, topmost overlay w
 - **Timer**: The window will auto-close after the specified amount of seconds.
 - **Hotkey Support**: The window can be manually closed by pressing the 'Q' key.
 - **Multi-processing**: The window can be displayed in a separate process.
-- **Update text**: Use queue to update text.
+- **Update Text**: Use queue to update text.
 
 ## How to Use
 
