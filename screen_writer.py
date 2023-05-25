@@ -29,6 +29,9 @@ class OverlayWindow(QWidget):
         
         if timer:
             QTimer.singleShot(timer * 1000, QApplication.instance().quit)
+            
+    def quit(self):
+        QApplication.instance().quit
         
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Q:
@@ -40,7 +43,7 @@ class OverlayWindow(QWidget):
             if message.type == 'write':
                 self.label.setText(message.text)
             if message.type == 'quit':
-                QApplication.instance().quit
+                QApplication.quit()
         except:
             time.sleep(0.25)
 
@@ -76,7 +79,3 @@ def write_to_screen(text, timer, queue=False):
         p = Process(target=write_to_screen_process, args=(text, timer))
         p.daemon = True
         p.start()
-        
-if __name__ == '__main__':
-    write_to_screen("Hello, world!", 5)
-    time.sleep(2)
