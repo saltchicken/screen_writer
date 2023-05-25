@@ -1,14 +1,14 @@
-import sys
+import sys, time
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel
 from PyQt5.QtCore import Qt, QTimer
 from multiprocessing import Process, Queue
-import time
         
 class OverlayWindow(QWidget):
     def __init__(self, text, timer=None, queue=None):
         super().__init__()
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground)
+        
         self.width = 800
         self.height = 100
         screen = QDesktopWidget().screenGeometry()
@@ -42,6 +42,10 @@ class OverlayWindow(QWidget):
             message = self.queue.get_nowait()
             if message.type == 'write':
                 self.label.setText(message.text)
+            if message.type == 'append':
+                self.label.setText(self.label.text() + message.text)
+            if message.type == 'clear':
+                self.label.setText('')
             if message.type == 'quit':
                 QApplication.quit()
         except:
@@ -58,6 +62,12 @@ class OverlayController():
         
     def write(self, text):
         self.queue.put(CommandMessage('write', text))
+        
+    def append(self, text):
+        self.queue.put(CommandMessage('append', text))
+    
+    def clear(self):
+        self.queue.put(CommandMessage('clear'))
         
     def exit(self):
         self.queue.put(CommandMessage('quit'))
