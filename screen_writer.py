@@ -29,14 +29,7 @@ class OverlayWindow(QWidget):
         
         if timer:
             QTimer.singleShot(timer * 1000, QApplication.instance().quit)
-            
-    def quit(self):
-        QApplication.instance().quit
         
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Q:
-            QApplication.quit()
-                       
     def event_loop(self):      
         try:
             message = self.queue.get_nowait()

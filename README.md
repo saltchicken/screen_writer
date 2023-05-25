@@ -5,16 +5,14 @@ This Python project uses the PyQt5 library to create a simple, topmost overlay w
 ## Features
 - **Overlay Window**: Creates a simple, translucent overlay window with the specified text.
 - **Timer**: The window will auto-close after the specified amount of seconds.
-- **Hotkey Support**: The window can be manually closed by pressing the 'Q' key.
 - **Multi-processing**: The window can be displayed in a separate process.
-- **Update Text**: Use queue to update text.
+- **Update Text**: Use OverlayController to update text.
 
 ## How to Use
 
 ### Function Definitions
-1. `OverlayWindow(text: str, timer: Optional[int]) -> None`: Initializes and configures the overlay window.
-2. `write_to_screen(text: str, timer: Optional[int]) -> None`: Initializes a QApplication, creates an OverlayWindow, and starts the app's event loop.
-3. `write_to_screen_process(text: str, timer: Optional[int]) -> None`: Starts the `write_to_screen` function in a separate process.
+2. `write_to_screen(text, timer, queue=None) -> OverlayController`: Initializes a QApplication, creates an OverlayWindow, and starts the app's event loop.
+3. `write_to_screen_process(text, timer) -> None`: Starts the `write_to_screen` function in a separate process.
 
 ### Example Usage
 ```python
