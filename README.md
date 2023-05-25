@@ -31,9 +31,13 @@ time.sleep(2)
 overlay_controller.exit()
 ```
 
-### Dependencies
+### Installation
 This project requires PyQt5. Install it with pip:
 ```python
 pip install PyQt5
+```
+Install via pip:
+```python
+pip install --upgrade git+https://github.com/saltchicken/screen_writer
 ```
 Remember, this is a simple GUI application. There are endless possibilities for what you can do by extending the provided classes or adding new features. Happy coding!
