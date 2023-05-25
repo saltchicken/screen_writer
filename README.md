@@ -21,7 +21,6 @@ This Python project uses the PyQt5 library to create a simple, topmost overlay w
 # Display "Hello, world!" for 5 seconds
 write_to_screen_process("Hello, world!", 5)
 ```
-This will display an overlay window with the text "Hello, world!" that will auto-close after 5 seconds. The window can be manually closed by pressing the 'Q' key.
 
 ```python
 # Use returned queue to update text
