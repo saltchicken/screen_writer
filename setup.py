@@ -5,7 +5,7 @@ import setuptools
 
 setuptools.setup(
     name='screen_writer',
-    version='0.0.8',
+    version='0.0.9',
     author='John Eicher',
     author_email='john.eicher89@gmail.com',
     description='Testing installation of Package',
