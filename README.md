@@ -20,6 +20,7 @@ This Python project uses the PyQt5 library to create a simple, topmost overlay w
 ```python
 # Display "Hello, world!" for 5 seconds
 write_to_screen("Hello, world!", 5)
+time.sleep(2)
 ```
 
 ```python

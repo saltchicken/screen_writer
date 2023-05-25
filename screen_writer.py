@@ -37,21 +37,27 @@ class OverlayWindow(QWidget):
     def event_loop(self):      
         try:
             message = self.queue.get_nowait()
-            self.label.setText(message)
+            if message.type == 'write':
+                self.label.setText(message.text)
+            if message.type == 'quit':
+                QApplication.instance().quit
         except:
             time.sleep(0.25)
 
+class CommandMessage():
+    def __init__(self, type, text = None):
+        self.type = type
+        self.text = text
+        
 class OverlayController():
     def __init__(self, queue):
         self.queue = queue
         
     def write(self, text):
-        # TODO Make this a JSON object with write type
-        self.queue.put(text)
+        self.queue.put(CommandMessage('write', text))
         
     def exit(self):
-        # TODO Make this a JSON object with command type
-        self.queue.put('exit')
+        self.queue.put(CommandMessage('quit'))
         
 def write_to_screen_process(text, timer, queue=None):
     app = QApplication(sys.argv)
@@ -70,3 +76,7 @@ def write_to_screen(text, timer, queue=False):
         p = Process(target=write_to_screen_process, args=(text, timer))
         p.daemon = True
         p.start()
+        
+if __name__ == '__main__':
+    write_to_screen("Hello, world!", 5)
+    time.sleep(2)
