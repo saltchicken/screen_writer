@@ -18,12 +18,14 @@ This Python project uses the PyQt5 library to create a simple, topmost overlay w
 
 ### Example Usage
 ```python
+from screen_writer import write_to_screen
 # Display "Hello, world!" for 5 seconds
 write_to_screen("Hello, world!", 5)
 time.sleep(2)
 ```
 
 ```python
+from screen_writer import write_to_screen
 # Return ControlOverlay object to interact with the window
 overlay_controller = write_to_screen("Hello, world!", 60, True)
 time.sleep(2)
