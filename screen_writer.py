@@ -53,20 +53,20 @@ class OverlayController():
         # TODO Make this a JSON object with command type
         self.queue.put('exit')
         
-def write_to_screen(text, timer, queue=None):
+def write_to_screen_process(text, timer, queue=None):
     app = QApplication(sys.argv)
     window = OverlayWindow(text, timer, queue)
     window.show()
     sys.exit(app.exec_())
     
-def write_to_screen_process(text, timer, queue=False):
+def write_to_screen(text, timer, queue=False):
     if queue:
         queue = Queue()
-        p = Process(target=write_to_screen, args=(text, timer, queue))
+        p = Process(target=write_to_screen_process, args=(text, timer, queue))
         p.daemon = True
         p.start()
         return OverlayController(queue)
     else:
-        p = Process(target=write_to_screen, args=(text, timer))
+        p = Process(target=write_to_screen_process, args=(text, timer))
         p.daemon = True
         p.start()
