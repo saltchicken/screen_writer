@@ -11,8 +11,8 @@ This Python project uses the PyQt5 library to create a simple, topmost overlay w
 ## How to Use
 
 ### Function Definitions
-2. `write_to_screen(text, timer, queue=None) -> OverlayController`: Initializes a QApplication, creates an OverlayWindow, and starts the app's event loop.
-3. `write_to_screen_process(text, timer) -> None`: Starts the `write_to_screen` function in a separate process.
+1. `write_to_screen(text, timer, queue=None) -> OverlayController`: Initializes a QApplication, creates an OverlayWindow, and starts the app's event loop.
+2. `write_to_screen_process(text, timer) -> None`: Starts the `write_to_screen` function in a separate process.
 
 ### Example Usage
 ```python
