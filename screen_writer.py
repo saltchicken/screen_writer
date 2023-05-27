@@ -62,7 +62,9 @@ class OverlayController():
         self.queue = queue
         
     def write(self, text, timer=None):
-        self.queue.put(CommandMessage('write', text, timer))            
+        self.queue.put(CommandMessage('write', text))
+        if timer:
+            QTimer.singleShot(timer * 1000, self.clear)
         
     def append(self, text):
         self.queue.put(CommandMessage('append', text))
