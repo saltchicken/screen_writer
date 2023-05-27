@@ -39,6 +39,8 @@ class OverlayWindow(QWidget):
                 self.write_timer.stop()
                 self.label.setText(message.text)
                 if timer:
+                    print("Timer set:")
+                    self.write_timer = QTimer(self)
                     self.write_timer.singleShot(timer * 1000, self.clear)
             if message.type == 'append':
                 self.label.setText(self.label.text() + message.text)
