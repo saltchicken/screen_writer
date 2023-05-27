@@ -48,11 +48,11 @@ class CommandMessage():
     def __init__(self, type, text = None):
         self.type = type
         self.text = text
-        self.write_timer = QTimer(self)
         
 class OverlayController():
     def __init__(self, queue):
         self.queue = queue
+        self.write_timer = QTimer(self)
         
     def write(self, text, timer=None):
         self.queue.put(CommandMessage('write', text))
