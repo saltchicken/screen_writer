@@ -38,7 +38,7 @@ class OverlayWindow(QWidget):
             if message.type == 'write':
                 self.write_timer.stop()
                 self.label.setText(message.text)
-                if timer:
+                if message.timer:
                     print("Timer set:")
                     self.write_timer = QTimer(self)
                     self.write_timer.singleShot(timer * 1000, self.clear)
