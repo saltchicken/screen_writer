@@ -21,6 +21,8 @@ class OverlayWindow(QWidget):
         self.label.setGeometry(0, 0, self.width, self.height) 
         self.label.setAlignment(Qt.AlignCenter)
         
+        self.write_timer = QTimer(self)
+        
         if queue:
             self.queue = queue
             self.timer = QTimer(self)
@@ -38,6 +40,7 @@ class OverlayWindow(QWidget):
             if message.type == 'append':
                 self.label.setText(self.label.text() + message.text)
             if message.type == 'clear':
+                self.write_timer.stop()
                 self.label.setText('')
             if message.type == 'quit':
                 QApplication.quit()
@@ -56,7 +59,7 @@ class OverlayController():
     def write(self, text, timer=None):
         self.queue.put(CommandMessage('write', text))
         if timer:
-            QTimer.singleShot(timer * 1000, self.clear)
+            self.write_timer.singleShot(timer * 1000, self.clear)
         
     def append(self, text):
         self.queue.put(CommandMessage('append', text))
