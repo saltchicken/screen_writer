@@ -43,6 +43,7 @@ class OverlayWindow(QWidget):
         self.label.setStyleSheet("font-size: 20px; color: white;")
         self.label.setGeometry(0, 0, self.width, self.height) 
         self.label.setAlignment(Qt.AlignLeft)
+        self.label.setWordWrap(True)
         
         self.tray_menu = QMenu()
                 
