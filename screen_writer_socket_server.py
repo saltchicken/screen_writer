@@ -96,6 +96,6 @@ if __name__ == '__main__':
     print(args)
     app = QApplication([])
     window = OverlayWindow(args)
-    window.label.setText('heh')
+    # window.label.setText('Test')
     window.show()
     sys.exit(app.exec_())
