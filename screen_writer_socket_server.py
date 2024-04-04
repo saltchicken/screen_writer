@@ -3,7 +3,14 @@ import configargparse
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel, QStyle, QAction, QMenu, QSystemTrayIcon
 from PyQt5.QtCore import Qt, QTimerEvent
 
+from dataclasses import dataclass
+
 import socket, threading
+
+@dataclass
+class SocketMessage:
+    type: str
+    message: str
 
 class ServerThread(threading.Thread):
     def __init__(self, label, quit_event):
