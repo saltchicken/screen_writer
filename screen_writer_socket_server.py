@@ -1,37 +1,34 @@
-import sys, time
+import sys, json
 import configargparse
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel, QStyle, QAction, QMenu, QSystemTrayIcon
 from PyQt5.QtCore import Qt, QTimerEvent
 
-from dataclasses import dataclass
-
 import socket, threading
+from loguru import logger
 
-@dataclass
-class SocketMessage:
-    type: str
-    message: str
-
-class ServerThread(threading.Thread):
+class ClientThread(threading.Thread):
     def __init__(self, label, quit_event):
         super().__init__()
         self.label = label
         self.quit_event = quit_event
-        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server_socket.bind(('0.0.0.0', 12346))
-        self.server_socket.listen(1)
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def run(self):
-        client_socket, client_address = self.server_socket.accept()
-        client_socket.settimeout(1) # Set timeout so that while loop does not block
-        print('Connection from', client_address)
+        server_address = '192.168.1.11'
+        server_port = 9998
+        logger.debug("Connecting to server")
+        self.client_socket.connect((server_address, server_port))
+        logger.debug("Connected to server")
         while not self.quit_event.is_set():
             try:
-                message = client_socket.recv(4096).decode()
-                self.label.setText(message)
+                data = self.client_socket.recv(4096).decode()
+                packet = json.loads(data)
+                if packet['type'] == 'phrase':
+                    self.label.setText(packet['message'])
             except socket.timeout:
+                logger.debug('Socket timeout')
                 pass
-        client_socket.close()
+        self.client_socket.close()
 
 class OverlayWindow(QWidget):
     def __init__(self, args):
@@ -77,7 +74,7 @@ class OverlayWindow(QWidget):
         
     def start_server(self):
         self.quit_event = threading.Event()
-        self.server_thread = ServerThread(self.label, self.quit_event)
+        self.server_thread = ClientThread(self.label, self.quit_event)
         self.server_thread.start()
                 
     def quit_action(self):
