@@ -12,13 +12,12 @@ class ClientThread(threading.Thread):
         self.label = label
         self.quit_event = quit_event
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client_socket.settimeout(1)
 
     def run(self):
         server_address = '192.168.1.11'
         server_port = 9998
-        logger.debug("Connecting to server")
         self.client_socket.connect((server_address, server_port))
-        logger.debug("Connected to server")
         while not self.quit_event.is_set():
             try:
                 data = self.client_socket.recv(4096).decode()
